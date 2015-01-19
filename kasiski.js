@@ -125,13 +125,19 @@ function kasiskiExamination(ciphertext){
     frequencyRanks.sort(function compare(x, y){
         return y.frequency - x.frequency;
     });
-
+    
+    // Our suggestion should be the first key length larger than 3, based on security assumptions
+    var firstKeyLengthIndex = 0;
+    while (frequencyRanks[firstKeyLengthIndex].factor < 4){
+        firstKeyLengthIndex++;
+    }
+    
     // Examination results
     return {
         "substringTable" : substringTable,
         "factorTable" : factorTable,
         "candidateFreqs" : candidateFreqs,
         "frequencyRanks" : frequencyRanks,
-        "firstKeyLength" : frequencyRanks[0].factor
+        "firstKeyLength" : frequencyRanks[firstKeyLengthIndex].factor
     };
 }
